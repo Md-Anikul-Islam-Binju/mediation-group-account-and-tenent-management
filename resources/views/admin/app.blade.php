@@ -86,7 +86,7 @@
         <a href="{{route('dashboard')}}" class="logo logo-light">
             <span class="logo-lg">
                 <img src="{{URL::to('backend/images/admin.png')}}" alt="logo" style="height: 50px;">
-                 <h4>Mediation Group</h4>
+                 <h4 style="color: white">Mediation Group</h4>
             </span>
             <span class="logo-sm">
                 <img src="{{URL::to('backend/images/admin.png')}}" alt="small logo">
