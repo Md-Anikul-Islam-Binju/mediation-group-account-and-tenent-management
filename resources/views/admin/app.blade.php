@@ -135,14 +135,7 @@
                 </li>
                 @endcan
 
-                @can('slider-list')
-                <li class="side-nav-item">
-                    <a href="{{route('slider.section')}}" class="side-nav-link">
-                        <i class="ri-slideshow-line"></i>
-                        <span> Slider </span>
-                    </a>
-                </li>
-                @endcan
+
 
 
 

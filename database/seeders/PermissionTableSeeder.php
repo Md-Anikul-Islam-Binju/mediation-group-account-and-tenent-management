@@ -33,11 +33,6 @@ class PermissionTableSeeder extends Seeder
             'user-edit',
             'user-delete',
 
-            // For Slider
-            'slider-list',
-            'slider-create',
-            'slider-edit',
-            'slider-delete',
 
             // Site Setting
             'site-setting',

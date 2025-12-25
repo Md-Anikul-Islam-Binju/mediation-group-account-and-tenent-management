@@ -34,12 +34,6 @@ Route::middleware('auth')->group(callback: function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/unauthorized-action', [AdminDashboardController::class, 'unauthorized'])->name('unauthorized.action');
 
-    // Slider Section
-    Route::get('/slider-section', [SliderController::class, 'index'])->name('slider.section');
-    Route::post('/slider-store', [SliderController::class, 'store'])->name('slider.store');
-    Route::put('/slider-update/{id}', [SliderController::class, 'update'])->name('slider.update');
-    Route::get('/slider-delete/{id}', [SliderController::class, 'destroy'])->name('slider.destroy');
-
 
     // Owner Section
     Route::get('/owner-section', [OwnerController::class, 'index'])->name('owner.section');
