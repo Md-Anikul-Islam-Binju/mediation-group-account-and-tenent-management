@@ -104,7 +104,7 @@ class OwnerFlatController extends Controller
 
     private function generateFlatCode()
     {
-        return 'FC-' . now()->format('YmdHis') . '-' . rand(1000, 9999);
+        return 'FC-' . now()->format('YmdHis');
     }
 
 }
