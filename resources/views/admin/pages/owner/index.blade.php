@@ -36,7 +36,6 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Account Mode</th>
                         <th>Agreements</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -50,7 +49,7 @@
                             <td>{{ $owner->name }}</td>
                             <td>{{ $owner->email ?? 'N/A' }}</td>
                             <td>{{ $owner->phone ?? 'N/A' }}</td>
-                            <td>{{ $owner->account_mode }}</td>
+
 {{--                            <td>--}}
 {{--                                @if(!empty($owner->agreement_paper) && is_array($owner->agreement_paper))--}}
 {{--                                    @foreach($owner->agreement_paper as $key => $file)--}}
@@ -150,14 +149,6 @@
                                                 <div class="col-6 mb-3">
                                                     <label>Phone</label>
                                                     <input type="text" name="phone" value="{{ $owner->phone }}" class="form-control">
-                                                </div>
-
-                                                <div class="col-6 mb-3">
-                                                    <label>Account Mode</label>
-                                                    <select name="account_mode" class="form-select">
-                                                        <option value="Cash" {{ $owner->account_mode == 'Cash' ? 'selected' : '' }}>Cash</option>
-                                                        <option value="AP" {{ $owner->account_mode == 'AP' ? 'selected' : '' }}>AP</option>
-                                                    </select>
                                                 </div>
                                             </div>
 
@@ -271,18 +262,7 @@
                                 <label>Phone</label>
                                 <input type="text" name="phone" class="form-control">
                             </div>
-
                             <div class="col-6 mb-3">
-                                <label>Account Mode</label>
-                                <select name="account_mode" class="form-select">
-                                    <option value="Cash">Cash</option>
-                                    <option value="AP">AP</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-12 mb-3">
                                 <label class="form-label">Agreement Papers</label>
 
                                 <!-- Hidden file input -->
@@ -306,7 +286,10 @@
                                     Allowed: PDF, JPG, PNG | Multiple files supported
                                 </small>
                             </div>
+
                         </div>
+
+
 
 
                         <div class="d-flex justify-content-end">

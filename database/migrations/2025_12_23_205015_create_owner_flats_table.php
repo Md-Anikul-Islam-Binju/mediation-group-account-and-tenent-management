@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('security_deposit_month')->nullable();
             $table->decimal('security_deposit_amount', 10, 2)->nullable();
             $table->text('remark')->nullable();
+            $table->enum('payment_mode', ['Cash', 'AP'])->default('Cash');
             $table->enum('status', ['Vacant', 'Booked'])->default('Vacant');
             $table->timestamps();
         });

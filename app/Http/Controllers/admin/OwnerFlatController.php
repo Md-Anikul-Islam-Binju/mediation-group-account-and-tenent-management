@@ -38,6 +38,7 @@ class OwnerFlatController extends Controller
             'service_charge' => 'nullable|numeric',
             'security_deposit_month' => 'nullable|integer',
             'security_deposit_amount' => 'nullable|numeric',
+            'payment_mode' => 'required|in:Cash,AP',
             'remark' => 'nullable|string',
         ]);
 
@@ -50,6 +51,7 @@ class OwnerFlatController extends Controller
             'security_deposit_month' => $request->security_deposit_month,
             'security_deposit_amount' => $request->security_deposit_amount,
             'remark' => $request->remark,
+            'payment_mode' => $request->payment_mode,
             'status' => 'Vacant',
         ]);
 
@@ -70,6 +72,7 @@ class OwnerFlatController extends Controller
             'security_deposit_month' => 'nullable|integer',
             'security_deposit_amount' => 'nullable|numeric',
             'remark' => 'nullable|string',
+            'payment_mode' => 'required|in:Cash,AP',
             'status' => 'required|in:Vacant,Booked',
         ]);
 
@@ -80,6 +83,7 @@ class OwnerFlatController extends Controller
             'service_charge' => $request->service_charge,
             'security_deposit_month' => $request->security_deposit_month,
             'security_deposit_amount' => $request->security_deposit_amount,
+            'payment_mode' => $request->payment_mode,
             'remark' => $request->remark,
             'status' => $request->status,
         ]);

@@ -14,7 +14,6 @@ class Owner extends Model
         'email',
         'phone',
         'agreement_paper',
-        'account_mode',
         'status',
     ];
 

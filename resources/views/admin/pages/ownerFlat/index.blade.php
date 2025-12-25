@@ -22,10 +22,11 @@
             <table class="table table-striped dt-responsive nowrap w-100">
                 <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Owner</th>
-                    <th>Flat Code</th>
+                    <th>S/N</th>
                     <th>Address</th>
+                    <th>Owner</th>
+                    <td>Payment Mode</td>
+                    <th>Flat Code</th>
                     <th>Rent</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -36,9 +37,10 @@
                 @foreach($ownerFlats as $key => $flat)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $flat->owner->name }}</td>
-                        <td>{{ $flat->flat_uniq_code }}</td>
                         <td>{{ $flat->address }}</td>
+                        <td>{{ $flat->owner->name }}</td>
+                        <td>{{ $flat->payment_mode }}</td>
+                        <td>{{ $flat->flat_uniq_code }}</td>
                         <td>{{ number_format($flat->monthly_rental_amount,2) }}</td>
                         <td>
                         <span class="badge {{ $flat->status == 'Vacant' ? 'bg-success' : 'bg-danger' }}">
@@ -134,7 +136,15 @@
                                                 <textarea name="remark" class="form-control">{{ $flat->remark }}</textarea>
                                             </div>
 
-                                            <div class="col-12 mb-3">
+                                            <div class="col-6 mb-3">
+                                                <label>Payment Mode</label>
+                                                <select name="payment_mode" class="form-select">
+                                                    <option value="Cash" {{ $flat->payment_mode == 'Cash' ? 'selected' : '' }}>Cash</option>
+                                                    <option value="AP" {{ $flat->payment_mode == 'AP' ? 'selected' : '' }}>AP</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-6 mb-3">
                                                 <label>Status</label>
                                                 <select name="status" class="form-select">
                                                     <option value="Vacant" {{ $flat->status == 'Vacant' ? 'selected' : '' }}>Vacant</option>
@@ -223,6 +233,14 @@
                             <div class="col-12 mb-3">
                                 <label>Remark</label>
                                 <textarea name="remark" class="form-control"></textarea>
+                            </div>
+
+                            <div class="col-12 mb-3">
+                                <label>Payment Mode</label>
+                                <select name="payment_mode" class="form-select">
+                                    <option value="Cash">Cash</option>
+                                    <option value="AP">AP</option>
+                                </select>
                             </div>
 
                         </div>

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
             $table->json('agreement_paper')->nullable(); // multiple files
-            $table->enum('account_mode', ['Cash', 'AP'])->default('Cash');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });

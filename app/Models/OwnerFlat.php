@@ -17,6 +17,7 @@ class OwnerFlat extends Model
         'service_charge',
         'security_deposit_month',
         'security_deposit_amount',
+        'payment_mode',
         'remark',
         'status',
     ];

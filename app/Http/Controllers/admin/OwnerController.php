@@ -37,7 +37,7 @@ class OwnerController extends Controller
                 'phone' => 'nullable|string|unique:owners,phone',
                 'agreement_paper' => 'nullable|array',
                 'agreement_paper.*' => 'file|mimes:pdf,jpg,png',
-                'account_mode' => 'required|in:Cash,AP',
+
             ]);
 
             $files = [];
@@ -55,7 +55,6 @@ class OwnerController extends Controller
                 'email'           => $request->email,
                 'phone'           => $request->phone,
                 'agreement_paper' => $files,
-                'account_mode'    => $request->account_mode,
                 'status'          => 'active',
             ]);
 
@@ -78,7 +77,6 @@ class OwnerController extends Controller
                 'phone' => 'nullable|string|unique:owners,phone,' . $owner->id,
                 'agreement_paper' => 'nullable|array',
                 'agreement_paper.*' => 'file|mimes:pdf,jpg,png',
-                'account_mode' => 'required|in:Cash,AP',
                 'status' => 'required|in:active,inactive',
             ]);
 
@@ -97,7 +95,6 @@ class OwnerController extends Controller
                 'email'           => $request->email,
                 'phone'           => $request->phone,
                 'agreement_paper' => $files,
-                'account_mode'    => $request->account_mode,
                 'status'          => $request->status,
             ]);
 
