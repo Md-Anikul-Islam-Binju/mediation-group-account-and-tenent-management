@@ -59,6 +59,13 @@ class PermissionTableSeeder extends Seeder
             'owner-flat-edit',
             'owner-flat-delete',
 
+            //tenant
+            'tenant',
+            'tenant-list',
+            'tenant-create',
+            'tenant-edit',
+            'tenant-delete',
+
         ];
         foreach ($permissions as $permission) {
             if (!Permission::where('name', $permission)->exists()) {

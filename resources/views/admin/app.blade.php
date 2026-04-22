@@ -136,6 +136,29 @@
                 @endcan
 
 
+                @can('tenant')
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarPages1" aria-expanded="false" aria-controls="sidebarPages1" class="side-nav-link">
+                            <i class="ri-pages-line"></i>
+                            <span> Tenant </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarPages1">
+                            <ul class="side-nav-second-level">
+
+                                @can('tenant-list')
+                                    <li>
+                                        <a href="{{route('tenant.section')}}">Tenant List</a>
+                                    </li>
+                                @endcan
+
+
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
+
+
 
 
 
