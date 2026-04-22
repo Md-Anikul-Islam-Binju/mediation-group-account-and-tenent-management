@@ -58,7 +58,7 @@ Route::middleware('auth')->group(callback: function () {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
 
-    // Site Setting
+    // Site Setting menu
     Route::get('/site-setting', [SiteSettingController::class, 'index'])->name('site.setting');
     Route::post('/site-settings-store-update/{id?}', [SiteSettingController::class, 'createOrUpdate'])->name('site-settings.createOrUpdate');
 
