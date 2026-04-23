@@ -139,7 +139,7 @@
                 @can('tenant')
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarPages12" aria-expanded="false" aria-controls="sidebarPages12" class="side-nav-link">
-                            <i class="ri-pages-line"></i>
+                            <i class="ri-user-3-line"></i>
                             <span> Tenant </span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -161,7 +161,7 @@
                 @can('rent-list')
                 <li class="side-nav-item">
                     <a href="{{route('rent.section')}}" class="side-nav-link">
-                        <i class="ri-dashboard-3-line"></i>
+                        <i class="ri-money-dollar-circle-line"></i>
                         <span> Rent </span>
                     </a>
                 </li>
@@ -175,7 +175,7 @@
                 @can('site-setting')
                     <li class="side-nav-item">
                         <a href="{{route('site.setting')}}" class="side-nav-link">
-                            <i class="ri-drag-move-fill"></i>
+                            <i class="ri-settings-3-line"></i>
                             <span> Site Setting </span>
                         </a>
                     </li>
