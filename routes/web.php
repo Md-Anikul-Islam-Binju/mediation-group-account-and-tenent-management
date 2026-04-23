@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\AdminDashboardController;
 use App\Http\Controllers\admin\OwnerBankController;
 use App\Http\Controllers\admin\OwnerController;
 use App\Http\Controllers\admin\OwnerFlatController;
+use App\Http\Controllers\admin\RentController;
 use App\Http\Controllers\admin\SiteSettingController;
 use App\Http\Controllers\admin\SliderController;
 
@@ -62,7 +63,12 @@ Route::middleware('auth')->group(callback: function () {
     Route::put('/tenant-update/{id}', [TenantController::class, 'update'])->name('tenant.update');
     Route::get('/tenant-delete/{id}', [TenantController::class, 'destroy'])->name('tenant.destroy');
 
-
+    // Rent Section
+    Route::get('/rent-section', [RentController::class, 'index'])->name('rent.section');
+    Route::post('/rent-store', [RentController::class, 'store'])->name('rent.store');
+    Route::put('/rent-update/{id}', [RentController::class, 'update'])->name('rent.update');
+    Route::get('/rent-delete/{id}', [RentController::class, 'destroy'])->name('rent.destroy');
+    Route::get('/get-owner-flats/{owner_id}', [RentController::class, 'getOwnerFlats']);
 
     // Role and User Section
     Route::resource('roles', RoleController::class);

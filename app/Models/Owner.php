@@ -20,4 +20,6 @@ class Owner extends Model
     protected $casts = [
         'agreement_paper' => 'array',
     ];
+
+
 }

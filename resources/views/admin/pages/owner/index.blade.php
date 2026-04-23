@@ -49,29 +49,6 @@
                             <td>{{ $owner->name }}</td>
                             <td>{{ $owner->email ?? 'N/A' }}</td>
                             <td>{{ $owner->phone ?? 'N/A' }}</td>
-
-{{--                            <td>--}}
-{{--                                @if(!empty($owner->agreement_paper) && is_array($owner->agreement_paper))--}}
-{{--                                    @foreach($owner->agreement_paper as $key => $file)--}}
-{{--                                        @php--}}
-{{--                                            if ($key === 0) {--}}
-{{--                                                $label = 'Main Copy';--}}
-{{--                                            } else {--}}
-{{--                                                $label = 'Extension Copy ' . $key;--}}
-{{--                                            }--}}
-{{--                                        @endphp--}}
-
-{{--                                        <a href="{{ asset('images/owner_agreements/' . $file) }}"--}}
-{{--                                           target="_blank"--}}
-{{--                                           class="badge bg-info mb-1">--}}
-{{--                                            {{ $label }}--}}
-{{--                                        </a>--}}
-{{--                                    @endforeach--}}
-{{--                                @else--}}
-{{--                                    N/A--}}
-{{--                                @endif--}}
-{{--                            </td>--}}
-
                             <td>
                                 @if(!empty($owner->agreement_paper) && is_array($owner->agreement_paper))
                                     @foreach($owner->agreement_paper as $key => $file)

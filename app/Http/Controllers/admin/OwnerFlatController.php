@@ -14,7 +14,6 @@ class OwnerFlatController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-
         $this->middleware(function ($request, $next) {
             abort_if(!Gate::allows('owner-flat-list'), 403);
             return $next($request);
@@ -25,7 +24,6 @@ class OwnerFlatController extends Controller
     {
         $owners = Owner::latest()->get();
         $ownerFlats = OwnerFlat::with('owner')->latest()->get();
-
         return view('admin.pages.ownerFlat.index', compact('owners', 'ownerFlats'));
     }
 

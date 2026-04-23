@@ -138,12 +138,12 @@
 
                 @can('tenant')
                     <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarPages1" aria-expanded="false" aria-controls="sidebarPages1" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#sidebarPages12" aria-expanded="false" aria-controls="sidebarPages12" class="side-nav-link">
                             <i class="ri-pages-line"></i>
                             <span> Tenant </span>
                             <span class="menu-arrow"></span>
                         </a>
-                        <div class="collapse" id="sidebarPages1">
+                        <div class="collapse" id="sidebarPages12">
                             <ul class="side-nav-second-level">
 
                                 @can('tenant-list')
@@ -152,10 +152,19 @@
                                     </li>
                                 @endcan
 
-
                             </ul>
                         </div>
                     </li>
+                @endcan
+
+
+                @can('rent-list')
+                <li class="side-nav-item">
+                    <a href="{{route('rent.section')}}" class="side-nav-link">
+                        <i class="ri-dashboard-3-line"></i>
+                        <span> Rent </span>
+                    </a>
+                </li>
                 @endcan
 
 

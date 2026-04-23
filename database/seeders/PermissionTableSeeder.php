@@ -66,6 +66,13 @@ class PermissionTableSeeder extends Seeder
             'tenant-edit',
             'tenant-delete',
 
+
+            //rent
+            'rent-list',
+            'rent-create',
+            'rent-edit',
+            'rent-delete',
+
         ];
         foreach ($permissions as $permission) {
             if (!Permission::where('name', $permission)->exists()) {
