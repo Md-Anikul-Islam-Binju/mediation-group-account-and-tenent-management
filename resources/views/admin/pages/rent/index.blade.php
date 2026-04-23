@@ -35,8 +35,6 @@
                         <th>Owner</th>
                         <th>Flat</th>
                         <th>Tenant</th>
-                        <th>Rent</th>
-                        <th>Service</th>
                         <th>Date</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -47,11 +45,50 @@
                     @foreach($rents as $key => $rent)
                         <tr>
                             <td>{{ $key+1 }}</td>
-                            <td>{{ $rent->owner->name ?? 'N/A' }}</td>
-                            <td>{{ $rent->flat->flat_name ?? 'N/A' }}</td>
-                            <td>{{ $rent->tenant->name ?? 'N/A' }}</td>
-                            <td>{{ $rent->monthly_rental_amount }}</td>
-                            <td>{{ $rent->service_charge ?? 0 }}</td>
+                            <td>
+                                Name : {{ $rent->owner->name ?? 'N/A' }}<br>
+                                Rent: {{ $rent->flat->monthly_rental_amount }}<br>
+                                Service Charge: {{ $rent->flat->service_charge ?? 0 }}
+                            </td>
+                            <td>{{ $rent->flat->address ?? 'N/A' }}</td>
+
+                            <td>
+                                Name : {{ $rent->tenant->name ?? 'N/A' }}<br>
+                                Rent: {{  $rent->monthly_rental_amount }}<br>
+                                Service Charge: {{ $rent->service_charge ?? 0  }}
+
+                                @php
+                                    $ownerCost = ($rent->flat->monthly_rental_amount ?? 0)
+                                               + ($rent->flat->service_charge ?? 0);
+
+                                    $tenantIncome = ($rent->monthly_rental_amount ?? 0)
+                                                  + ($rent->service_charge ?? 0);
+
+                                    $profit = $tenantIncome - $ownerCost;
+                                @endphp
+
+                                <div>
+                                    <small class="text-primary">
+                                        🏠 Given to Owner: {{ $ownerCost }}
+                                    </small><br>
+
+                                    <small class="text-info">
+                                        💰 From Tenant: {{ $tenantIncome }}
+                                    </small><br>
+
+                                    @if($profit >= 0)
+                                        <span class="badge bg-success mt-1">
+                                            Profit: {{ $profit }}
+                                        </span>
+                                    @else
+                                        <span class="badge bg-danger mt-1">
+                                            Loss: {{ $profit }}
+                                        </span>
+                                    @endif
+                                </div>
+
+
+                            </td>
                             <td>{{ \Carbon\Carbon::parse($rent->date)->format('j F Y') }}</td>
 
                             <td>{{ $rent->status == 'active' ? 'Active' : 'Inactive' }}</td>
