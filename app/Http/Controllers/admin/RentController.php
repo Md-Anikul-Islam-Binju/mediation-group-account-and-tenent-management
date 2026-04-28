@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bill;
 use App\Models\Owner;
 use App\Models\OwnerFlat;
 use App\Models\Rent;
@@ -31,7 +32,10 @@ class RentController extends Controller
         $owners = Owner::latest()->get();
         $tenants = Tenant::latest()->get();
         $flats = OwnerFlat::latest()->get();
-        return view('admin.pages.rent.index', compact('rents', 'owners','flats', 'tenants'));
+
+        $currentMonth = now()->format('F-Y');
+        $isGenerated = Bill::where('month', $currentMonth)->exists();
+        return view('admin.pages.rent.index', compact('rents', 'owners','flats', 'tenants','isGenerated', 'currentMonth'));
     }
 
     // STORE (AUTO BOOK FLAT)

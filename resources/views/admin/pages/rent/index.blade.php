@@ -18,12 +18,48 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-end gap-1">
                     @can('rent-create')
                         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addNewModalId">
                             Add New
                         </button>
                     @endcan
+
+                    @if($isGenerated)
+                        <button class="btn btn-secondary" disabled>
+                            Bill Already Generated ({{ now()->format('F') }})
+                        </button>
+                    @else
+                        <button id="generateBillBtn" class="btn btn-success">
+                            Generate Bill {{ now()->format('F') }}
+                        </button>
+                        <div class="modal fade" id="progressModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Generating Bills...</h5>
+                                    </div>
+
+                                    <div class="modal-body text-center">
+
+                                        <p class="mb-3">⏳ Please wait, bills are being generated</p>
+
+                                        <div class="progress">
+                                            <div id="progressBar"
+                                                 class="progress-bar progress-bar-striped progress-bar-animated"
+                                                 role="progressbar"
+                                                 style="width: 0%">
+                                                0%
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -384,6 +420,52 @@
                         });
                     });
             });
+        });
+    </script>
+
+    <script>
+        document.getElementById('generateBillBtn').addEventListener('click', function () {
+
+            let btn = this;
+            btn.disabled = true;
+
+            let progressBar = document.getElementById('progressBar');
+            let percent = 0;
+
+            // Show modal
+            let modal = new bootstrap.Modal(document.getElementById('progressModal'));
+            modal.show();
+
+            // Fake progress animation
+            let interval = setInterval(() => {
+                if (percent < 90) {
+                    percent += Math.floor(Math.random() * 10);
+                    if (percent > 90) percent = 90;
+
+                    progressBar.style.width = percent + '%';
+                    progressBar.innerText = percent + '%';
+                }
+            }, 300);
+
+            // Call backend
+            fetch("{{ route('bill.generate') }}")
+                .then(res => res.text())
+                .then(() => {
+
+                    clearInterval(interval);
+
+                    progressBar.style.width = '100%';
+                    progressBar.innerText = '100%';
+
+                    setTimeout(() => {
+                        location.reload();
+                    }, 800);
+                })
+                .catch(() => {
+                    clearInterval(interval);
+                    alert('Something went wrong!');
+                    btn.disabled = false;
+                });
         });
     </script>
 

@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\admin\AdminDashboardController;
 
+use App\Http\Controllers\admin\BillGenerateController;
 use App\Http\Controllers\admin\OwnerBankController;
 use App\Http\Controllers\admin\OwnerController;
 use App\Http\Controllers\admin\OwnerFlatController;
@@ -69,6 +70,8 @@ Route::middleware('auth')->group(callback: function () {
     Route::put('/rent-update/{id}', [RentController::class, 'update'])->name('rent.update');
     Route::get('/rent-delete/{id}', [RentController::class, 'destroy'])->name('rent.destroy');
     Route::get('/get-owner-flats/{owner_id}', [RentController::class, 'getOwnerFlats']);
+
+    Route::get('/bill-generate', [BillGenerateController::class, 'generate'])->name('bill.generate');
 
     // Role and User Section
     Route::resource('roles', RoleController::class);
