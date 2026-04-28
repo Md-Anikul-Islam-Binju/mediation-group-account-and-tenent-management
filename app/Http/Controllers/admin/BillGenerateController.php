@@ -89,33 +89,6 @@ class BillGenerateController extends Controller
     }
 
 
-//    public function index(Request $request)
-//    {
-//        $query = Bill::query();
-//        // month filter
-//        $month = $request->month ?? now()->format('Y-m');
-//        $query->where('month', $month);
-//        // address search
-//        if ($request->address) {
-//            $query->where('flat_address', 'like', '%' . $request->address . '%');
-//        }
-//        // PAGINATION (IMPORTANT)
-//        $bills = $query->latest()->paginate(200)->appends($request->all());
-//
-//        // totals (WITHOUT pagination limit)
-//        $allBills = $query->get();
-//
-//        $totalAmount = $allBills->sum('total_amount');
-//        $totalDue = $allBills->sum('due_amount');
-//
-//        return view('admin.pages.bill.index', compact(
-//            'bills',
-//            'month',
-//            'totalAmount',
-//            'totalDue'
-//        ));
-//    }
-
     public function index(Request $request)
     {
         $query = Bill::query();
@@ -144,6 +117,31 @@ class BillGenerateController extends Controller
             'totalDue',
             'totalPaid'
         ));
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $bill = Bill::findOrFail($id);
+
+        $extra = [];
+
+        if ($request->extra_key && $request->extra_value) {
+            foreach ($request->extra_key as $i => $key) {
+
+                if ($key !== null && $key !== '') {
+                    $extra[$key] = $request->extra_value[$i] ?? 0;
+                }
+
+            }
+        }
+
+        $bill->update([
+            'status' => $request->status,
+            'is_extra_amount' => json_encode($extra),
+        ]);
+
+        return back()->with('success', 'Updated successfully');
     }
 
 }
