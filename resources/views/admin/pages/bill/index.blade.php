@@ -152,11 +152,79 @@
                                 </td>
                             </tr>
 
+                            <div class="modal fade" id="editNewModalId{{ $bill->id }}" data-bs-backdrop="static" tabindex="-1">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Update Bill</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="POST" action="#" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="row">
+                                                    <div class="col-12 mb-3">
+                                                        <label>Status</label>
+                                                        <select name="status" class="form-select">
+                                                            <option value="pending" {{ $bill->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                                            <option value="finalized" {{ $bill->status == 'finalized' ? 'selected' : '' }}>Finalized</option>
+                                                            <option value="paid" {{ $bill->status == 'paid' ? 'selected' : '' }}>Paid</option>
+                                                        </select>
+                                                    </div>
 
-                            </tr>
+                                                    {{-- EXTRA AMOUNT DYNAMIC --}}
+                                                    <label class="mb-2">Extra Charges</label>
+
+                                                    @php
+                                                        $extra = json_decode($bill->is_extra_amount, true) ?? [];
+                                                    @endphp
+
+                                                    <div id="extraWrapper{{ $bill->id }}">
+
+                                                        @foreach($extra as $key => $value)
+                                                            <div class="row mb-2 extra-row">
+                                                                <div class="col-5">
+                                                                    <input type="text"
+                                                                           name="extra_key[]"
+                                                                           value="{{ $key }}"
+                                                                           class="form-control"
+                                                                           placeholder="Label (e.g Gas Bill)">
+                                                                </div>
+
+                                                                <div class="col-5">
+                                                                    <input type="number"
+                                                                           name="extra_value[]"
+                                                                           value="{{ $value }}"
+                                                                           class="form-control"
+                                                                           placeholder="Amount">
+                                                                </div>
+
+                                                                <div class="col-2">
+                                                                    <button type="button" class="btn btn-danger removeRow">X</button>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+
+                                                    </div>
+
+                                                    <button type="button"
+                                                            class="btn btn-sm btn-success mt-2"
+                                                            onclick="addExtraRow({{ $bill->id }})">
+                                                        + Add More
+                                                    </button>
+                                                </div><br>
+                                                <div class="d-flex justify-content-end">
+                                                    <button class="btn btn-primary" type="submit">Update</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
                         @endforeach
-
                         </tbody>
 
                     </table>
@@ -170,6 +238,35 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function addExtraRow(id) {
+            let wrapper = document.getElementById('extraWrapper' + id);
+
+            let html = `
+        <div class="row mb-2 extra-row">
+            <div class="col-5">
+                <input type="text" name="extra_key[]" class="form-control" placeholder="Label">
+            </div>
+            <div class="col-5">
+                <input type="number" name="extra_value[]" class="form-control" placeholder="Amount">
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-danger removeRow">X</button>
+            </div>
+        </div>
+    `;
+
+            wrapper.insertAdjacentHTML('beforeend', html);
+        }
+
+        // remove row
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('removeRow')) {
+                e.target.closest('.extra-row').remove();
+            }
+        });
+    </script>
 
 @endsection
 

@@ -41,7 +41,7 @@ return new class extends Migration
             $table->text('remark')->nullable();
 
             $table->string('status')->default('pending');
-            // pending, paid, partial
+            // pending, paid, finalized
 
             $table->timestamps();
 
