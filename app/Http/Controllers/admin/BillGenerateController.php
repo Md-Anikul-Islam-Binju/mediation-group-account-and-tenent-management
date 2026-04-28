@@ -9,22 +9,48 @@ use Illuminate\Http\Request;
 
 class BillGenerateController extends Controller
 {
-    public function generate()
+    public function start()
     {
-        $month = now()->format('F-Y');
+        $month = now()->format('Y-m');
 
-        // Check if already generated for this month
-        $alreadyGenerated = Bill::where('month', $month)->exists();
+        // already generated?
+        $exists = Bill::where('month', $month)->exists();
 
-        if ($alreadyGenerated) {
-            return back()->with('error', 'Bill already generated for this month!');
+        if ($exists) {
+            return response()->json([
+                'status' => 'exists'
+            ]);
         }
 
+        $total = Rent::count();
 
+        return response()->json([
+            'status' => 'ok',
+            'total' => $total
+        ]);
+    }
 
-        $rents = Rent::with(['owner','flat','tenant'])->get();
+    public function step(Request $request)
+    {
+        $offset = $request->offset ?? 0;
+        $month = now()->format('Y-m');
 
-        foreach ($rents as $rent) {
+        $rent = Rent::with(['owner','flat','tenant'])
+            ->skip($offset)
+            ->first();
+
+        if (!$rent) {
+            return response()->json([
+                'done' => true
+            ]);
+        }
+
+        // avoid duplicate
+        $exists = Bill::where('rent_id', $rent->id)
+            ->where('month', $month)
+            ->exists();
+
+        if (!$exists) {
 
             $total = ($rent->monthly_rental_amount ?? 0) + ($rent->service_charge ?? 0);
 
@@ -56,6 +82,10 @@ class BillGenerateController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Bills generated for ' . $month);
+        return response()->json([
+            'done' => false,
+            'next' => $offset + 1
+        ]);
     }
+
 }

@@ -71,8 +71,8 @@ Route::middleware('auth')->group(callback: function () {
     Route::get('/rent-delete/{id}', [RentController::class, 'destroy'])->name('rent.destroy');
     Route::get('/get-owner-flats/{owner_id}', [RentController::class, 'getOwnerFlats']);
 
-    Route::get('/bill-generate', [BillGenerateController::class, 'generate'])->name('bill.generate');
-
+    Route::get('/bill-generate-start', [BillGenerateController::class, 'start']);
+    Route::get('/bill-generate-step', [BillGenerateController::class, 'step']);
     // Role and User Section
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);

@@ -33,27 +33,17 @@
                         <button id="generateBillBtn" class="btn btn-success">
                             Generate Bill {{ now()->format('F') }}
                         </button>
-                        <div class="modal fade" id="progressModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+                        <div class="modal fade" id="progressModal" tabindex="-1" data-bs-backdrop="static">
                             <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
+                                <div class="modal-content text-center p-4">
 
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Generating Bills...</h5>
-                                    </div>
+                                    <h5>Generating Bills...</h5>
+                                    <p id="progressText">Starting...</p>
 
-                                    <div class="modal-body text-center">
-
-                                        <p class="mb-3">⏳ Please wait, bills are being generated</p>
-
-                                        <div class="progress">
-                                            <div id="progressBar"
-                                                 class="progress-bar progress-bar-striped progress-bar-animated"
-                                                 role="progressbar"
-                                                 style="width: 0%">
-                                                0%
-                                            </div>
-                                        </div>
-
+                                    <div class="progress mt-3">
+                                        <div id="progressBar"
+                                             class="progress-bar progress-bar-striped progress-bar-animated"
+                                             style="width: 0%">0%</div>
                                     </div>
 
                                 </div>
@@ -429,44 +419,57 @@
             let btn = this;
             btn.disabled = true;
 
-            let progressBar = document.getElementById('progressBar');
-            let percent = 0;
-
-            // Show modal
             let modal = new bootstrap.Modal(document.getElementById('progressModal'));
+            let progressBar = document.getElementById('progressBar');
+            let progressText = document.getElementById('progressText');
+
             modal.show();
 
-            // Fake progress animation
-            let interval = setInterval(() => {
-                if (percent < 90) {
-                    percent += Math.floor(Math.random() * 10);
-                    if (percent > 90) percent = 90;
+            // STEP 1: Start
+            fetch('/bill-generate-start')
+                .then(res => res.json())
+                .then(data => {
 
-                    progressBar.style.width = percent + '%';
-                    progressBar.innerText = percent + '%';
-                }
-            }, 300);
+                    if (data.status === 'exists') {
+                        alert('Already generated for this month!');
+                        modal.hide();
+                        btn.disabled = false;
+                        return;
+                    }
 
-            // Call backend
-            fetch("{{ route('bill.generate') }}")
-                .then(res => res.text())
-                .then(() => {
+                    let total = data.total;
+                    let offset = 0;
 
-                    clearInterval(interval);
+                    function process() {
 
-                    progressBar.style.width = '100%';
-                    progressBar.innerText = '100%';
+                        fetch(`/bill-generate-step?offset=${offset}`)
+                            .then(res => res.json())
+                            .then(res => {
 
-                    setTimeout(() => {
-                        location.reload();
-                    }, 800);
-                })
-                .catch(() => {
-                    clearInterval(interval);
-                    alert('Something went wrong!');
-                    btn.disabled = false;
+                                if (res.done) {
+                                    progressBar.style.width = '100%';
+                                    progressBar.innerText = '100%';
+                                    progressText.innerText = 'Completed ✅';
+
+                                    setTimeout(() => location.reload(), 1000);
+                                    return;
+                                }
+
+                                offset++;
+
+                                let percent = Math.round((offset / total) * 100);
+
+                                progressBar.style.width = percent + '%';
+                                progressBar.innerText = percent + '%';
+
+                                progressText.innerText = `Processing ${offset} of ${total}`;
+
+                                process(); // next step
+                            });
+                    }
+
+                    process();
                 });
         });
     </script>
-
 @endsection

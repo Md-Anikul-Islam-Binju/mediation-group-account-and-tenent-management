@@ -33,7 +33,7 @@ class RentController extends Controller
         $tenants = Tenant::latest()->get();
         $flats = OwnerFlat::latest()->get();
 
-        $currentMonth = now()->format('F-Y');
+        $currentMonth = now()->format('Y-m');
         $isGenerated = Bill::where('month', $currentMonth)->exists();
         return view('admin.pages.rent.index', compact('rents', 'owners','flats', 'tenants','isGenerated', 'currentMonth'));
     }
