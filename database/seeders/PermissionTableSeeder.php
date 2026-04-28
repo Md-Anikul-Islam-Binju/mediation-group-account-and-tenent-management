@@ -75,6 +75,8 @@ class PermissionTableSeeder extends Seeder
             //bill
             'bill-generate',
             'bill-list',
+            'bill-update',
+            'bill-invoice',
 
 
         ];

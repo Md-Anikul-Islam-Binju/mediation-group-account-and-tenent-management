@@ -64,6 +64,7 @@
                             <th>Extra</th>
                             <th>Invoice Status</th>
                             <th>Payment Status</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
 
@@ -128,10 +129,29 @@
 
                                 {{-- PAYMENT STATUS (CALCULATED) --}}
                                 <td>
-                                <span class="badge bg-{{ $badge }}">
-                                    {{ $status }}
-                                </span>
+                                    <span class="badge bg-{{ $badge }}">
+                                        {{ $status }}
+                                    </span>
                                 </td>
+                                <td style="width: 120px;">
+                                    <div class="d-flex justify-content-end gap-1">
+                                        @can('bill-update')
+                                            <button class="btn btn-info btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#editNewModalId{{ $bill->id }}">
+                                                Update
+                                            </button>
+                                        @endcan
+
+                                        @can('bill-invoice')
+                                            <a href="#" class="btn btn-success btn-sm">
+                                                Invoice
+                                            </a>
+                                        @endcan
+                                    </div>
+                                </td>
+                            </tr>
+
 
                             </tr>
 

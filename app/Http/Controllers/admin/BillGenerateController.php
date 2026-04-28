@@ -130,7 +130,7 @@ class BillGenerateController extends Controller
         }
 
         // PAGINATION (IMPORTANT)
-        $bills = $query->latest()->paginate(10)->withQueryString();
+        $bills = $query->latest()->paginate(100)->withQueryString();
 
         // COLLECTION BASED SUMMARY
         $totalAmount = $bills->sum('total_amount');
