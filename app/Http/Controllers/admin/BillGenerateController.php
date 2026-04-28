@@ -121,18 +121,13 @@ class BillGenerateController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $bill = Bill::findOrFail($id);
-
         $extra = [];
-
         if ($request->extra_key && $request->extra_value) {
             foreach ($request->extra_key as $i => $key) {
-
                 if ($key !== null && $key !== '') {
                     $extra[$key] = $request->extra_value[$i] ?? 0;
                 }
-
             }
         }
 
@@ -140,8 +135,12 @@ class BillGenerateController extends Controller
             'status' => $request->status,
             'is_extra_amount' => json_encode($extra),
         ]);
-
         return back()->with('success', 'Updated successfully');
+    }
+
+    public function invoice($id)
+    {
+        return view('admin.pages.bill.invoice');
     }
 
 }

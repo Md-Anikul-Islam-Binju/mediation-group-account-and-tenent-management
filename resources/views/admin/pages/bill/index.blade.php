@@ -6,11 +6,11 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Mediation Group Account Management</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Bill/Invoice</a></li>
-                        <li class="breadcrumb-item active">Bill/Invoice!</li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Bill</a></li>
+                        <li class="breadcrumb-item active">Bill!</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Bill/Invoice!</h4>
+                <h4 class="page-title">Bill!</h4>
             </div>
         </div>
         <div class="col-12">
@@ -117,14 +117,19 @@
                                 </td>
 
                                 <td>
+                                    @can('bill-update')
                                     <button class="btn btn-sm btn-info"
                                             data-bs-toggle="modal"
                                             data-bs-target="#editModal{{ $bill->id }}">
                                         Update
                                     </button>
-                                    <a href=" " class="btn btn-sm btn-secondary">
+                                    @endcan
+
+                                    @can('bill-invoice')
+                                    <a href="{{route('bill.invoice',$bill->id)}}" class="btn btn-sm btn-secondary">
                                         Invoice
                                     </a>
+                                    @endcan
                                 </td>
                             </tr>
 
