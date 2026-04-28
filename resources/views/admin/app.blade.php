@@ -167,12 +167,22 @@
                 </li>
                 @endcan
 
+                @can('bill-list')
+                    <li class="side-nav-item">
+                        <a href="{{route('bills.section')}}" class="side-nav-link">
+                            <i class="ri-money-dollar-circle-line"></i>
+                            <span> Bill/Invoice </span>
+                        </a>
+                    </li>
+                @endcan
 
 
 
 
 
-                @can('site-setting')
+
+
+            @can('site-setting')
                     <li class="side-nav-item">
                         <a href="{{route('site.setting')}}" class="side-nav-link">
                             <i class="ri-settings-3-line"></i>

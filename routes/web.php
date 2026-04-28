@@ -73,6 +73,9 @@ Route::middleware('auth')->group(callback: function () {
 
     Route::get('/bill-generate-start', [BillGenerateController::class, 'start']);
     Route::get('/bill-generate-step', [BillGenerateController::class, 'step']);
+    Route::get('/bills', [BillGenerateController::class, 'index'])->name('bills.section');
+
+
     // Role and User Section
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);

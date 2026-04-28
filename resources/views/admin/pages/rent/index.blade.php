@@ -25,6 +25,7 @@
                         </button>
                     @endcan
 
+                    @can('bill-generate')
                     @if($isGenerated)
                         <button class="btn btn-secondary" disabled>
                             Bill Already Generated ({{ now()->format('F') }})
@@ -50,6 +51,7 @@
                             </div>
                         </div>
                     @endif
+                    @endcan
                 </div>
             </div>
 
@@ -271,7 +273,6 @@
             </div>
         </div>
     </div>
-
 
     {{-- ADD MODAL --}}
     <div class="modal fade" id="addNewModalId" data-bs-backdrop="static" tabindex="-1">

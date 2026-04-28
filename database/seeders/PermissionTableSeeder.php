@@ -72,6 +72,10 @@ class PermissionTableSeeder extends Seeder
             'rent-create',
             'rent-edit',
             'rent-delete',
+            //bill
+            'bill-generate',
+            'bill-list',
+
 
         ];
         foreach ($permissions as $permission) {

@@ -88,4 +88,62 @@ class BillGenerateController extends Controller
         ]);
     }
 
+
+//    public function index(Request $request)
+//    {
+//        $query = Bill::query();
+//        // month filter
+//        $month = $request->month ?? now()->format('Y-m');
+//        $query->where('month', $month);
+//        // address search
+//        if ($request->address) {
+//            $query->where('flat_address', 'like', '%' . $request->address . '%');
+//        }
+//        // PAGINATION (IMPORTANT)
+//        $bills = $query->latest()->paginate(200)->appends($request->all());
+//
+//        // totals (WITHOUT pagination limit)
+//        $allBills = $query->get();
+//
+//        $totalAmount = $allBills->sum('total_amount');
+//        $totalDue = $allBills->sum('due_amount');
+//
+//        return view('admin.pages.bill.index', compact(
+//            'bills',
+//            'month',
+//            'totalAmount',
+//            'totalDue'
+//        ));
+//    }
+
+    public function index(Request $request)
+    {
+        $query = Bill::query();
+
+        // month filter
+        $month = $request->month ?? now()->format('Y-m');
+        $query->where('month', $month);
+
+        // address filter
+        if ($request->address) {
+            $query->where('flat_address', 'like', '%' . $request->address . '%');
+        }
+
+        // PAGINATION (IMPORTANT)
+        $bills = $query->latest()->paginate(10)->withQueryString();
+
+        // COLLECTION BASED SUMMARY
+        $totalAmount = $bills->sum('total_amount');
+        $totalDue = $bills->sum('due_amount');
+        $totalPaid = $bills->sum('paid_amount');
+
+        return view('admin.pages.bill.index', compact(
+            'bills',
+            'month',
+            'totalAmount',
+            'totalDue',
+            'totalPaid'
+        ));
+    }
+
 }
